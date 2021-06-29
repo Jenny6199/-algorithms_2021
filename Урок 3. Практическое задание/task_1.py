@@ -16,26 +16,27 @@ b) выполните набор операций и со списком, и с�
 
 Прошу вас внимательно читать ТЗ и не забыть выполнить все пункты.
 """
+import random as rd
+import timeit
+import time
 
 
+# Вариант 1
 def time_counter(func):
     """ Подсчитывает время выполнения функции"""
-    import time
-
     def my_wrapper():
         """ Функция-обертка."""
         decor = '-'*20
-        print(decor, 'Начало', decor)
+        print(decor, f'Тестируется функция: {func.__name__}', decor)
         start = time.time()
-        random_list = func()
+        rand_list = func()
         # print(f'Документация фуцнкции: \n{func.__doc__}\n', decor)
-        print(random_list)
+        print(rand_list)
         end = time.time()
         result = end - start
-        print(f'Время выполнения функции {func} - {result} c.')
+        print(f'Время выполнения функции {func.__name__} - {result} c.')
         print('-'*20, 'Конец ', '-'*20)
-        return random_list
-
+        return rand_list
     return my_wrapper()
 
 
@@ -48,7 +49,6 @@ def random_int_list(length=10, boarder_1=1, boarder_2=100):
     :param - boarder_2:int - конечная граница выборки
     :return - result_list:list - список со случайными целыми числами
     """
-    import random as rd
     result_list = [rd.randint(boarder_1, boarder_2) for _ in range(length)]
     return result_list
 
@@ -61,8 +61,6 @@ def random_int_dict(length=10, boarder_1=1, boarder_2=100):
     :param boarder_2:int - конечная граница выборки
     :return: - result_dict:dict - словарь со случайными значениями
     """
-    import random as rd
-
     result_dict = {}
     for ID in range(1, length+1):
         result_dict[ID] = rd.randint(boarder_1, boarder_2)
@@ -74,10 +72,8 @@ def get_descriptive_output():
     for key, values in my_dict.items():
         print(key, values, sep=':')
 
-import random as rd
-import timeit
 
-
+# Второй вариант
 def analyzer(func):
     """Тестирующая функция"""
     def wrapper():
