@@ -73,3 +73,35 @@ def get_descriptive_output():
     my_dict = random_int_dict()
     for key, values in my_dict.items():
         print(key, values, sep=':')
+
+import random as rd
+import timeit
+
+
+def analyzer(func):
+    """Тестирующая функция"""
+    def wrapper():
+        """Вспомогательная функция-обертка"""
+        print(f'Время выполнения функции {func.__name__} составило: ',
+              timeit.timeit(stmt="random_list()", globals=globals(), number=1000))
+    return wrapper()
+
+
+def random_list(length=10, min_boarder=0, max_boarder=100):
+    """
+    Фунция создает список заполненный случайными значениями,
+    добавлен блок обработки ошибок принимаемых значений -
+    в случае выявления возвращаются значения по умолчанию.
+    :param - length - длина списка, по умолчанию 10,
+    :param - min_boarder - нижняя граница значений элементов списка, по умолчанию 0,
+    :param - max_boarder - верхяя граница значений элементов списка, по умолчанию 100.
+    :return - array - список заполненный случайными значениями.
+    """
+    try:
+        length, min_boarder, max_boarder = round(length), round(min_boarder), round(max_boarder)
+    except TypeError:
+        length, min_boarder, max_boarder = 10, 0, 100
+    return [rd.randint(min_boarder, max_boarder) for _ in range(length)]
+
+
+analyzer(random_list)
